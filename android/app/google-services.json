@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "457582385653-65ppkpreugvsl46bhv72it040j1u3nev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blinkit_clone",
+            "certificate_hash": "08db8a2291b0c0d254a1be237296f1dad9324232"
+          }
+        },
+        {
           "client_id": "457582385653-jnpjnvir5picvr7tu4nkvd5iv34dkl4s.apps.googleusercontent.com",
           "client_type": 3
         }

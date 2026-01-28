@@ -1,5 +1,6 @@
 import 'package:blinkit_clone/data/constants/ui_consts.dart';
 import 'package:blinkit_clone/features/auth/auth_services.dart';
+import 'package:blinkit_clone/firebase_options.dart';
 import 'package:blinkit_clone/presentation/pages/login_page.dart';
 import 'package:blinkit_clone/presentation/pages/navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/services.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

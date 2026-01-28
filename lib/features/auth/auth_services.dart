@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthServices {
@@ -30,45 +31,63 @@ class AuthServices {
   }
 
   static Future<UserCredential?> signInWithGoogle() async {
-    try {
-      initSignIn();
-      final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
+    if (kIsWeb) {
+      //web implementation
+      final GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
 
-      final idToken = googleUser.authentication.idToken;
+      googleAuthProvider.addScope(
+        'https://www.googleapis.com/auth/contacts.readonly',
+      );
 
-      final authorizationClient = googleUser.authorizationClient;
-      GoogleSignInClientAuthorization? authorization = await authorizationClient
-          .authorizationForScopes(['email', 'profile']);
+      return await _auth.signInWithPopup(googleAuthProvider);
+    } else {
+      //android implementation
+      try {
+        initSignIn();
+        final GoogleSignInAccount googleUser = await googleSignIn
+            .authenticate();
 
-      String? accessToken = authorization?.accessToken;
+        final idToken = googleUser.authentication.idToken;
 
-      if (accessToken == null) {
-        final GoogleSignInClientAuthorization? authorization2 =
+        final authorizationClient = googleUser.authorizationClient;
+        GoogleSignInClientAuthorization? authorization =
             await authorizationClient.authorizationForScopes([
               'email',
               'profile',
             ]);
-        if (authorization2?.accessToken == null) {
-          throw FirebaseAuthException(code: "error", message: "error");
+
+        String? accessToken = authorization?.accessToken;
+
+        if (accessToken == null) {
+          final GoogleSignInClientAuthorization? authorization2 =
+              await authorizationClient.authorizationForScopes([
+                'email',
+                'profile',
+              ]);
+          if (authorization2?.accessToken == null) {
+            throw FirebaseAuthException(code: "error", message: "error");
+          }
+          authorization = authorization2;
         }
-        authorization = authorization2;
+        accessToken = authorization?.accessToken;
+
+        final credential = GoogleAuthProvider.credential(
+          idToken: idToken,
+          accessToken: accessToken,
+        );
+
+        return await FirebaseAuth.instance.signInWithCredential(credential);
+      } catch (e) {
+        rethrow;
       }
-      accessToken = authorization?.accessToken;
-
-      final credential = GoogleAuthProvider.credential(
-        idToken: idToken,
-        accessToken: accessToken,
-      );
-
-      return await FirebaseAuth.instance.signInWithCredential(credential);
-    } catch (e) {
-      rethrow;
     }
   }
 
   static Future<void> logout() async {
     await _auth.signOut();
-    await googleSignIn.signOut();
+    if (!kIsWeb) {
+      await googleSignIn.signOut();
+    }
   }
   // static Future<UserCredential> signInWithGoogle() async {
   //   // Trigger the authentication flow

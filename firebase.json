@@ -1,1 +1,22 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"grocery-app-34eeb","appId":"1:457582385653:android:95aa2e143530536b93e8bc","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"grocery-app-34eeb","configurations":{"android":"1:457582385653:android:95aa2e143530536b93e8bc"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "grocery-app-34eeb",
+          "appId": "1:457582385653:android:95aa2e143530536b93e8bc",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "grocery-app-34eeb",
+          "configurations": {
+            "android": "1:457582385653:android:95aa2e143530536b93e8bc",
+            "web": "1:457582385653:web:a6d6941586758b8d93e8bc"
+          }
+        }
+      }
+    }
+  }
+}
