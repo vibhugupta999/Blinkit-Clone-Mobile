@@ -43,9 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-*.jks
-*.keystore
-key.properties
-
+/android/app/google-sevices.json
+# web
 /web/index.html
