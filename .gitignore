@@ -46,3 +46,5 @@ app.*.map.json
 /android/app/google-sevices.json
 # web
 /web/index.html
+
+/lib/firebase_options.dart
